@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1691253254625116515}
   - component: {fileID: 714306882386279198}
   - component: {fileID: 7108222380184966134}
+  - component: {fileID: -7096434994343087753}
   m_Layer: 0
   m_Name: torre_l3
   m_TagString: Untagged
@@ -89,15 +90,32 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4286648564037061105}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3cf137c1ec61984fbe64d56eccf62e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   radioRango: 7
-  tiempoRecarga: 4
-  PrefabProyectil: {fileID: 496034920185070483, guid: d4354324ef6207c4284dd6fa511b9c67,
+  tiempoRecarga: 3
+  PrefabProyectil: {fileID: 8339381695450453216, guid: 58c803fa0864ed24c835a9db13c74c83,
     type: 3}
   nivelActual: 3
+  costoInicial: 0
+  costoMejora: 0
+  costoVenta: 0
+  CostoMejoraInc: 0
+  CostoVentaInc: 0
   nivelSprite: []
   seActualiza: 1
+--- !u!114 &-7096434994343087753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4286648564037061105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39b974252cf5e314f96acd4077ee8fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -4,33 +4,45 @@ using UnityEngine;
 
 public class TorreScript : MonoBehaviour
 {
-
-    [Header("Variables de disparon")]
+    [Header("Variables de disparo")]
     [Tooltip("Distancia maxima de disparo de la torre")]
     public float radioRango;
-
     [Tooltip("Tiempo de recarga")]
     public float tiempoRecarga;
-
-    [Tooltip("PreFab del proyectil")]
+    [Tooltip("Prefab del proyectil")]
     public GameObject PrefabProyectil;
-
     [Tooltip("Tiempo pasado de la ultima recarga")]
     private float tiempoUltimoDisparo;
 
     [Header("Niveles de torre")]
-    [Tooltip("Nivel actual de la torre")]
+    [Tooltip("Nivel actual de torre")]
     public int nivelActual;
 
+//agregue 2 feb
+    [Header("Comprar torre")]
+    [Tooltip("Precio de la torre")]
+    public int costoInicial;
+
+    [Tooltip("Precio de mejora de la torre")]
+    public int costoMejora;
+    [Tooltip("Precio costo de venta de la torre")]
+    public int costoVenta;
+
+    [Tooltip("Precio incremento de mejora")]
+    public int CostoMejoraInc;
+    [Tooltip("Precio de incremento de venta")]
+    public int CostoVentaInc;
+
+ 
 
 
     [Tooltip("Sprites de los niveles de la torre")]
     public Sprite[] nivelSprite;
 
-    [Tooltip("Variable para verificar si la torre puede subir de nivel")]
-    public bool seActualiza = true;
+    [Tooltip("VAriable para verificar si la torre puede subir de nivel")]
+    public bool seActualiza=true;
+    
 
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -40,67 +52,73 @@ public class TorreScript : MonoBehaviour
     void Update()
     {
 
-        if (tiempoUltimoDisparo >= tiempoRecarga) {
-
-            tiempoUltimoDisparo = 0;
-            //Encontrar todos los GameObjects que tengan un collider dentro del rango de disparo
+        if(tiempoUltimoDisparo >= tiempoRecarga)
+        {
+            tiempoUltimoDisparo=0;
+            //encontrar todos los Game Objects que tengan un collider dentro del rango
+            //de disparo
             Collider2D[] disparoColision = Physics2D.OverlapCircleAll(transform.position, radioRango);
 
-            if (disparoColision.Length != 0) {
+            if (disparoColision.Length != 0){
 
-                //Logica de los disparos con posibles blancos
-                // Panda mas cercano
+                //logica de los disparos con posibles blancos
+                //panda mas cercano
 
-                float distanciaMinima = int.MaxValue;
-                int indice = -1;
+                float distanciaMinima= int.MaxValue;
+                int indice=-1;
 
-                for (int i = 0; i < disparoColision.Length; i++) {
-                    if (disparoColision[i].tag == "Enemigo") {
+                for(int i=0; i<disparoColision.Length;i++){
+
+                    if(disparoColision[i].tag == "Enemigo"){
                         float distancia = Vector2.Distance(disparoColision[i].transform.position, this.transform.position);
-
-                        if (distancia < distanciaMinima) {
+                        if(distancia < distanciaMinima){
                             indice = i;
                             distanciaMinima = distancia;
+
                         }
                     }
                 }
-
-                if (indice < 0) {
+                if(indice < 0){
                     return;
                 }
+                //existe blanco a disparar
+                Transform blanco= disparoColision[indice].transform;
+                Vector2 direccion= (blanco.position -this.transform.position).normalized;
 
-                //Existe blanco a disparar
-                Transform blanco = disparoColision[indice].transform;
-                Vector2 direccion = (blanco.position - this.transform.position).normalized;
-
-                //Disparar
-                //Se crea el proyectil con una instancia del Prefab del proyectil
-                GameObject proyectil = GameObject.Instantiate(PrefabProyectil, this.transform.position, Quaternion.identity) as GameObject;
-                proyectil.GetComponent<proyectilScript>().direccion = direccion;
-
+                //disparar
+                //se  crea el proyectil con una intacia del prefab del proyectil
+                GameObject proyectil= GameObject.Instantiate(PrefabProyectil, this.transform.position, Quaternion.identity) as GameObject;
+                proyectil.GetComponent<proyectilScript>().direccion=direccion;
             }
-        }
 
-        tiempoUltimoDisparo += Time.deltaTime;
-        
+        }
+        tiempoUltimoDisparo += Time.deltaTime; 
+
     }
 
-    public void subirNivel() {
-        if (!seActualiza) {
+    public void subirNivel(){
+        if (!seActualiza){
             return;
         }
 
         this.nivelActual++;
 
-        if (this.nivelActual == nivelSprite.Length) {
-            seActualiza = false;
+        if(this.nivelActual == nivelSprite.Length ){
+            seActualiza=false;
         }
 
         //Mejorar estado de torre
         radioRango += 1f;
         tiempoRecarga -= 0.5f;
 
-        this.GetComponent<SpriteRenderer>().sprite = nivelSprite[nivelActual];
-    }
+        //5 de feb
+        //sube los precios de mejora y venta
+        costoVenta += CostoVentaInc;
+        costoMejora += CostoMejoraInc;
 
+
+        this.GetComponent<SpriteRenderer>().sprite = nivelSprite[nivelActual];
+
+
+    }
 }

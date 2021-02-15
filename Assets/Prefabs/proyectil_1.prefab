@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba0c139124d32d43abb07ca5523c7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  herida: 0
+  herida: 100
   velocidad: 1
   direccion: {x: 1, y: 1, z: 0}
   tiempoDuracion: 10
